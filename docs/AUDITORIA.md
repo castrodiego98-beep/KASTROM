@@ -19,7 +19,7 @@ O que **não** foi possível verificar está no fim do documento.
 
 | Área | Situação | Ponto principal |
 |---|---|---|
-| Hospedagem e domínio | **Crítica** | `kastrom.eng.br` não aponta para o site e não abre em HTTPS; há uma cópia antiga e indexável na Netlify |
+| Hospedagem e domínio | **Crítica** | `kastrom.eng.br` não aponta para o site (está no serviço de redirecionamento do Registro.br); há uma cópia antiga e indexável na Netlify |
 | Desempenho | Excelente | Lighthouse 100 em todas as páginas medidas; LCP de 0,9 s no celular; páginas de 99 a 362 KB |
 | Acessibilidade | Excelente | Lighthouse 100; axe-core sem nenhuma violação em 16 combinações |
 | Segurança | Muito boa | CSP, HSTS, proteção contra molduras, política de permissões, sem cookies nem terceiros |
@@ -36,7 +36,7 @@ Em ordem. A coluna "Onde" diz quem resolve: **painel** (o CMS deste repositório
 
 | # | O que fazer | Por quê | Onde |
 |---|---|---|---|
-| 1 | Ligar `kastrom.eng.br` ao site na Cloudflare, com HTTPS | Hoje o domínio aponta para um servidor do Registro.br e o certificado HTTPS é inválido. Todos os endereços que o site declara como oficiais (canonical, sitemap, imagem de compartilhamento, `llms.txt`) usam `https://kastrom.eng.br`, então nada disso funciona para o Google nem para quem recebe um link | DNS |
+| 1 | Ligar `kastrom.eng.br` ao site na Cloudflare, com HTTPS | Hoje o domínio aponta para o serviço de redirecionamento do Registro.br, e não para o site. Todos os endereços que o site declara como oficiais (canonical, sitemap, imagem de compartilhamento, `llms.txt`) usam `https://kastrom.eng.br`, então nenhum deles entrega uma página do site ao Google. O passo a passo está em `docs/DOMINIO-E-EMAIL.md` | DNS |
 | 2 | Completar o DNS de e-mail (MX, SPF, DKIM, DMARC) | Há um único registro MX e nenhum SPF nem DMARC: respostas enviadas de `gabriel@kastrom.eng.br` tendem a cair em spam, e qualquer pessoa pode forjar o remetente | DNS |
 | 3 | Tirar do ar (ou bloquear para buscadores) a cópia em `kastrom.netlify.app` | É uma versão antiga do site, sem `noindex`, com títulos antigos, sem `llms.txt` e com os quatro PDFs do portfólio dando erro 404 | fora |
 | 4 | Enviar `X-Robots-Tag: noindex` só no endereço `workers.dev` | Quando o domínio oficial passar a usar o mesmo Worker, o cabeçalho não pode ir junto, ou o site fica invisível no Google | código |
@@ -64,25 +64,20 @@ O site está em três lugares, e nenhum deles é o endereço oficial.
 
 | Lugar | O que há lá | Situação |
 |---|---|---|
-| **`kastrom.eng.br`** (domínio oficial) | DNS no Registro.br (`a.auto.dns.br`, `b.auto.dns.br`). O domínio aponta para `200.160.2.95` (`r.registro.br`), um servidor do próprio Registro.br, e não para a Cloudflare nem para a Netlify | **Não entrega o site.** Em HTTPS o certificado é inválido; em `www.kastrom.eng.br` a conexão é recusada |
+| **`kastrom.eng.br`** (domínio oficial) | DNS no Registro.br (`a.auto.dns.br`, `b.auto.dns.br`). O domínio aponta para `200.160.2.95` (`r.registro.br`), um servidor do próprio Registro.br, e não para a Cloudflare nem para a Netlify | **Não entrega o site.** Quem responde é o serviço de redirecionamento do Registro.br, com certificado válido do Let's Encrypt para `kastrom.eng.br` e `www`. Não foi possível ler, daqui, para onde ele redireciona |
 | **Cloudflare** `kastrom.kastrom.workers.dev` | Worker `kastrom` (criado em 02/11/2026, atualizado em 05/11/2026) com a versão atual do site (Astro 7.4.5) | No ar e correto, com `noindex` (endereço provisório). Sem domínio próprio ligado, sem banco KV e sem R2 |
 | **Netlify** `kastrom.netlify.app` | Projeto `kastrom` com uma versão anterior (Astro 7.4.4) | **Indexável e desatualizado**: títulos antigos, endereços oficiais terminando em `.html`, sem `llms.txt`, os quatro PDFs do portfólio com erro 404, formulário pelo Netlify Forms |
 | **Vercel** | A conta está ligada, mas sem permissão para listar projetos nesta sessão; nenhum domínio cadastrado | Não verificado |
 
 **E-mail.** O domínio tem um único registro MX (`alt2.aspmx.l.google.com`, um dos servidores secundários do Google) e nenhum registro SPF nem DMARC. O recebimento funciona enquanto aquele servidor responder; o envio é o problema: sem SPF, DKIM e DMARC, o Gmail e o Outlook tratam as mensagens de `@kastrom.eng.br` como suspeitas. Para uma empresa que atende só por e-mail, isso custa contatos.
 
-**Recomendação: ficar só com a Cloudflare.** É onde já está a versão atual e onde roda o Worker (e o painel deste repositório). O caminho:
+**Recomendação: ficar só com a Cloudflare.** É onde já está a versão atual e onde roda o Worker (e o painel deste repositório). O passo a passo, com os cuidados para o e-mail não parar, está em [`docs/DOMINIO-E-EMAIL.md`](DOMINIO-E-EMAIL.md). Depois de ligar o domínio:
 
-1. Na Cloudflare, adicionar o domínio `kastrom.eng.br` (plano gratuito). Ela lista os registros DNS existentes; **confira que o MX foi copiado** antes de seguir, para o e-mail não parar.
-2. Aproveitar para corrigir o e-mail: os registros MX atuais do Google Workspace, SPF (`v=spf1 include:_spf.google.com ~all`), DKIM (gerado no painel do Google Workspace) e DMARC (comece com `v=DMARC1; p=none; rua=mailto:...`).
-3. No Registro.br, trocar os servidores DNS do domínio pelos dois que a Cloudflare informar.
-4. No Worker `kastrom`, ligar o domínio `kastrom.eng.br` (Domínios personalizados) e redirecionar `www` para ele. O certificado HTTPS é emitido automaticamente.
-5. Ajustar o `noindex` para valer só em `workers.dev` (prioridade 4).
-6. Conferir: `curl -sI https://kastrom.eng.br/` deve responder 200, sem `x-robots-tag`.
-7. Cadastrar o domínio no Google Search Console e enviar `https://kastrom.eng.br/sitemap-index.xml`.
-8. Apagar o projeto da Netlify, ou deixá-lo com `noindex` e redirecionando para o domínio oficial.
+- o cabeçalho `noindex` deve valer só em `workers.dev` (prioridade 4);
+- cadastrar o domínio no Google Search Console e enviar `https://kastrom.eng.br/sitemap-index.xml`;
+- apagar o projeto da Netlify, ou deixá-lo com `noindex` e redirecionando para o domínio oficial.
 
-Os passos 1 a 4 mexem no DNS e no e-mail da empresa; por isso não foram feitos nesta auditoria.
+A troca mexe no DNS e no e-mail da empresa, e depende de acesso ao Registro.br; por isso não foi feita nesta auditoria.
 
 ## O que já está muito bom
 
@@ -243,7 +238,7 @@ Pontos de redação:
 
 ## O que não foi verificado
 
-- **`kastrom.eng.br` em HTTP (porta 80)**: este ambiente só faz conexões HTTPS, então não vi para onde o Registro.br redireciona quem digita o endereço sem `https://`. Em HTTPS, o certificado inválido foi confirmado.
+- **`kastrom.eng.br` em HTTP (porta 80)**: este ambiente só faz conexões HTTPS, então não vi para onde o Registro.br redireciona quem digita o endereço sem `https://`. Em HTTPS, o servidor apresenta um certificado válido do Let's Encrypt, mas assinado por uma raiz nova que este ambiente de teste não reconhece; por isso também não consegui ler a resposta. (Uma versão anterior deste relatório dizia que o certificado era inválido: era uma limitação do ambiente de teste, não do domínio.)
 - **Vercel**: a conta está ligada, mas sem autorização para listar projetos nesta sessão.
 - **Envio real do formulário**: não enviei mensagens de teste para não gerar e-mails falsos na caixa da empresa.
 - **Áudio do vídeo**: não sei se há narração; disso depende a necessidade de legendas.
