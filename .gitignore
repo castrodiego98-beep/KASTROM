@@ -4,3 +4,4 @@ node_modules/
 .wrangler/
 testes/e2e/capturas/
 *.log
+exportar/
