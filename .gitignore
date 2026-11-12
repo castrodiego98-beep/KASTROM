@@ -1,0 +1,6 @@
+node_modules/
+.dev/
+.dev.vars
+.wrangler/
+testes/e2e/capturas/
+*.log

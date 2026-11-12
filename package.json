@@ -1,0 +1,20 @@
+{
+  "name": "kastrom-cms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Painel de controle (CMS) do site da KAS-Trom Projetos: camada de edição na Cloudflare Workers.",
+  "scripts": {
+    "dev": "node scripts/montar-dev.mjs && wrangler dev",
+    "senha": "node scripts/gerar-senha.mjs",
+    "espelhar": "node scripts/espelhar-site.mjs",
+    "videos": "node scripts/otimizar-videos.mjs",
+    "test": "node --test \"testes/unidade/*.test.mjs\"",
+    "test:e2e": "node scripts/montar-dev.mjs && node testes/e2e/rodar.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "wrangler": "^4"
+  }
+}

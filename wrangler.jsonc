@@ -1,0 +1,23 @@
+{
+  // Configuração da Cloudflare para rodar o painel no seu computador (npm run dev) e para os testes.
+  // Em produção, as mesmas ligações (assets, KV e segredos) precisam existir na configuração do site.
+  // Veja docs/INTEGRACAO.md.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kastrom",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    // Em desenvolvimento, a pasta é montada por scripts/montar-dev.mjs: cópia do site publicado + pasta admin/.
+    "directory": "./.dev/site",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // O Worker atende primeiro as páginas, o painel, a API e os vídeos.
+    // Fontes, imagens, CSS e PDFs continuam saindo direto, sem passar pelo Worker (não contam como execução).
+    "run_worker_first": ["/*", "!/_astro/*", "!/documentos/*", "!/admin/fontes/*", "!/*.png", "!/*.jpg", "!/*.ico", "!/*.svg", "!/*.webmanifest", "!/*.xml"]
+  },
+  "kv_namespaces": [
+    // Crie com: npx wrangler kv namespace create CMS   (e troque o id abaixo pelo que o comando mostrar)
+    { "binding": "CMS", "id": "TROQUE_PELO_ID_DO_KV" }
+  ]
+}

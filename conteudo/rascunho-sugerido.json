@@ -1,0 +1,76 @@
+{
+  "sobre": "Rascunho sugerido para o painel da KAS-Trom. Carregue em Configurações > Carregar cópia, revise cada texto e só então salve e publique. As respostas marcadas com [CONFIRMAR] descrevem a forma de trabalho da empresa e precisam ser conferidas por quem responde por ela.",
+  "conteudo": {
+    "seo": {
+      "/servicos": {
+        "titulo": "Serviços de engenharia, patentes e gestão | KAS-Trom"
+      },
+      "/sobre": {
+        "titulo": "Sobre a KAS-Trom: engenharia de produto e patentes"
+      },
+      "/contato": {
+        "titulo": "Contato: fale sobre seu projeto ou patente | KAS-Trom",
+        "descricao": "Fale com a KAS-Trom Projetos sobre desenvolvimento de produtos, patentes e gestão de projetos. Contato por formulário ou e-mail, sem expor a invenção."
+      },
+      "/privacidade": {
+        "descricao": "Como a KAS-Trom Projetos trata os dados enviados pelo formulário de contato, conforme a LGPD: o que coleta, para que usa, com quem compartilha e seus direitos."
+      }
+    },
+    "faq": {
+      "/": [
+        {
+          "pergunta": "Meu projeto pode ser patenteado?",
+          "resposta": "Depende, e é a pergunta certa a fazer antes de investir. Nem sempre a patente é obtida, em geral por causa de anterioridade: alguém já ter protegido algo semelhante. Por isso a pesquisa de anterioridade faz parte do trabalho. Se já existe uma patente no caminho, o foco do projeto muda: desenvolver uma solução que não infrinja a patente existente."
+        },
+        {
+          "pergunta": "Vocês assinam acordo de confidencialidade (NDA)?",
+          "resposta": "[CONFIRMAR] Sim. Antes de recebermos qualquer detalhe técnico da invenção, as duas partes assinam um acordo de confidencialidade (NDA, do inglês non-disclosure agreement). Ele define o que é informação sigilosa, quem pode ter acesso a ela e por quanto tempo o sigilo vale.\n\nPor isso o primeiro contato pede só o contexto geral do projeto: os detalhes ficam para depois da assinatura."
+        },
+        {
+          "pergunta": "Como fica o sigilo do meu projeto?",
+          "resposta": "A parte técnica evolui em paralelo com a proteção para garantir o sigilo e a proteção do futuro produto. Antes de proteger uma invenção, evite divulgar detalhes técnicos dela, inclusive neste site e por e-mail."
+        },
+        {
+          "pergunta": "Posso divulgar minha invenção antes de pedir a patente?",
+          "resposta": "O mais seguro é não divulgar. Para ser patenteável, a invenção precisa ser nova, e uma apresentação em feira, um vídeo ou uma publicação podem contar como divulgação. A lei brasileira (Lei 9.279/96, art. 12) prevê um período de graça de 12 meses para divulgações feitas pelo próprio inventor, mas muitos países não têm regra equivalente. Se a divulgação já aconteceu, avise logo no primeiro contato."
+        },
+        {
+          "pergunta": "Por que proteger uma invenção, e não só desenvolvê-la?",
+          "resposta": "Por dois motivos. Proteção de mercado: a patente garante o direito de exclusividade sobre o produto e, com isso, protege o retorno do investimento feito no desenvolvimento. Renda: a patente é um ativo intangível de valor, que pode ser vendido ou licenciado, o que traz retorno financeiro ao inventor."
+        },
+        {
+          "pergunta": "Qual a diferença entre patente de invenção e modelo de utilidade?",
+          "resposta": "A patente de invenção protege uma solução técnica nova para um problema, com atividade inventiva, e vale por 20 anos a partir do depósito do pedido. O modelo de utilidade protege uma melhoria funcional na forma ou na disposição de um objeto de uso prático e vale por 15 anos. A escolha depende do que há de novo no produto, e a pesquisa de anterioridade ajuda a decidir."
+        },
+        {
+          "pergunta": "Preciso ter um protótipo para pedir uma patente?",
+          "resposta": "Não. O INPI não exige protótipo: o pedido precisa descrever a invenção de forma clara e suficiente para que um técnico no assunto consiga realizá-la. Modelos virtuais e desenhos técnicos ajudam a chegar a essa descrição e a testar o conceito antes de fabricar."
+        },
+        {
+          "pergunta": "Posso contratar só uma etapa do trabalho?",
+          "resposta": "Sim. As quatro etapas (Definir, Desenvolver, Proteger e Implementar) podem ser contratadas individualmente ou integradas em um plano de trabalho. O escopo é adaptado à maturidade e à necessidade de cada produto."
+        },
+        {
+          "pergunta": "O que é TRL e por que isso importa para o meu projeto?",
+          "resposta": "TRL (Technology Readiness Levels) é a escala de níveis de maturidade tecnológica, que vai de 1 (princípios básicos observados) a 9 (sistema comprovado em operação). Saber em que nível o projeto está ajuda a definir o que falta desenvolver e validar. É também a referência usada em editais de fomento à inovação."
+        },
+        {
+          "pergunta": "A KAS-Trom ajuda com Lei do Bem, FINEP e BNDES?",
+          "resposta": "Sim, na parte técnica. Preparamos informações, documentação técnica e relatórios para planos de incentivo fiscal à inovação, como a Lei do Bem, e apoiamos a elaboração de propostas técnicas conforme os requisitos de chamadas como as da FINEP e do BNDES."
+        },
+        {
+          "pergunta": "Para quem a KAS-Trom trabalha?",
+          "resposta": "Para indústrias e fábricas, inventores independentes, universidades, órgãos públicos e institutos de inovação."
+        },
+        {
+          "pergunta": "O que preciso informar no primeiro contato?",
+          "resposta": "Só o contexto geral: que tipo de produto é, em que etapa o projeto está e o que você procura (projeto completo, patente ou gestão). Não é preciso, nem recomendável, detalhar a invenção nesse momento. Respondemos por e-mail e, se fizer sentido, conversamos sobre escopo e valores."
+        },
+        {
+          "pergunta": "Quanto custa?",
+          "resposta": "Depende do escopo: cada projeto é diferente. Conte a sua necessidade pelo formulário de contato para conversarmos sobre escopo e valores."
+        }
+      ]
+    }
+  }
+}
